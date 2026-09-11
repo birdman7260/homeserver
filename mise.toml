@@ -1,0 +1,11 @@
+#:schema https://mise.jdx.dev/schema/mise.json
+
+# Baseline toolchain for this repo. Tools and tasks get added as the repo
+# takes shape; keeping this file self-contained means a fresh clone gets the
+# same tools without relying on ~/.config/mise/config.toml.
+
+[tools]
+gh = "latest"       # GitHub Issues workflow — see docs/agents/issue-tracker.md
+jq = "latest"
+lefthook = "latest"
+yq = "latest"
