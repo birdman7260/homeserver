@@ -5,7 +5,7 @@
 # same tools without relying on ~/.config/mise/config.toml.
 
 [tools]
-gh = "latest"       # GitHub Issues workflow — see docs/agents/issue-tracker.md
+gh = "latest"       # GitHub Issues workflow — see .claude/agents/issue-tracker.md
 jq = "latest"
 lefthook = "latest"
 yq = "latest"

@@ -37,6 +37,14 @@ reader, naming each load-bearing account and the disposition the owner wants for
 it. Lives with the succession secrets, not on the server.
 _Avoid_: start-here note, account list, runbook
 
+### Documentation
+
+**Call script**:
+The document the owner reads aloud to [Hands](#hands) during a phone call, or
+texts them a link to. Written to be spoken, not discovered: it has no reader
+who arrives at it unprompted.
+_Avoid_: panic page, fridge page, emergency doc
+
 ### People and things
 
 **Load-bearing account**:
@@ -49,6 +57,12 @@ A person granted standing, pre-arranged access to the succession secrets,
 exercisable without the owner's participation. Distinct from someone who merely
 helps: helping needs no credentials.
 _Avoid_: trusted contact, next of kin, beneficiary
+
+**Hands**:
+Someone with physical access to the house, phoned by the owner and talked
+through a task in real time. Holds no credentials and makes no decisions — the
+owner supplies both. Present only while the owner is alive to place the call.
+_Avoid_: helper, friend, partner
 
 **Successor**:
 Whoever exercises emergency access. Their job is to wind the system down or keep
