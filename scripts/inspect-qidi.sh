@@ -368,7 +368,7 @@ stage "Unauthenticated: what this machine can reach without credentials"
 say "This is the heart of the ticket. Moonraker reports whether it trusts the"
 say "caller, and the camera either needs a login or it doesn't."
 printf '\n'
-for p in 22 80 443 7125 8080; do
+for p in 22 80 443 7125 8080 8990 10088; do
   if port_open "$PRINTER_IP" "$p"; then
     printf '  %s·%s port %s open\n' "$DIM" "$RESET" "$p"
     printf '\n===== port %s =====\nopen\n' "$p" >> "$REPORT"
@@ -386,13 +386,27 @@ probe "printer/info (Klipper version and state)" \
   -- curl -sS -m 10 "http://$PRINTER_IP:7125/printer/info"
 probe "machine/system_info (host, distro, service list)" \
   -- curl -sS -m 10 "http://$PRINTER_IP:7125/machine/system_info"
+probe "machine/proc_stats (system uptime: has it rebooted lately?)" \
+  -- curl -sS -m 10 "http://$PRINTER_IP:7125/machine/proc_stats"
 
 say ""
-say "Now the header test. The published fork trusts any caller claiming to be"
-say "127.0.0.1 in an X-Real-Ip header, before it checks logins at all. The"
-say "research inferred that from source and never tested it on hardware."
-probe "access/info with a spoofed X-Real-Ip (the header bypass)" \
-  -- curl -sS -m 10 -H "X-Real-Ip: 127.0.0.1" "http://$PRINTER_IP:7125/access/info"
+say "Now the header test. The fork reads the caller's address out of an"
+say "X-Real-Ip header, so a caller can claim to be somebody else."
+printf '\n'
+note "Claiming to be 127.0.0.1 proves nothing from here: this machine's own LAN"
+note "address is already trusted, so the answer comes back yes either way. The"
+note "test that discriminates is claiming to be a PUBLIC address. If Moonraker"
+note "believes the header, trust is lost and the request gets refused."
+printf '\n'
+# Reading the pair: baseline 200 and spoofed 401 means the header is honoured,
+# so the client IP is the entire authentication story and no login added to
+# this printer can mean anything. Both 200 means the header is ignored.
+probe "baseline: a protected endpoint, no header" \
+  -- curl -sS -m 10 -o /dev/null -w 'HTTP %{http_code}\n' "http://$PRINTER_IP:7125/printer/info"
+probe "same endpoint, claiming to be a public address" \
+  -- curl -sS -m 10 -o /dev/null -w 'HTTP %{http_code}\n' -H "X-Real-Ip: 8.8.8.8" "http://$PRINTER_IP:7125/printer/info"
+probe "access/info, claiming to be a public address" \
+  -- curl -sS -m 10 -H "X-Real-Ip: 8.8.8.8" "http://$PRINTER_IP:7125/access/info"
 
 probe "camera snapshot headers (port 8080, no login)" \
   -- curl -sS -m 10 -o /dev/null -D - "http://$PRINTER_IP:8080/?action=snapshot"
