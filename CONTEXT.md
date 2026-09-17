@@ -72,5 +72,21 @@ _Avoid_: heir, executor, inheritor
 **Disposition**:
 What the owner wants done with a load-bearing account after their death: cancel,
 transfer, or leave running. Recorded per account, and the one judgement no
-successor can make on the owner's behalf.
+successor can make on the owner's behalf. Reserved for succession: what happens
+to a *workload* at cutover is not a disposition.
 _Avoid_: instruction, wish, action
+
+**Dev VM**:
+The always-on development guest, running on the same host as every service and
+isolated from them by the hypervisor rather than by separate hardware. Personal
+repos only, never an LXC container, and never trusted by the rest of the
+estate. Distinct from the laptop, which is also a development machine but is
+nobody's server.
+_Avoid_: dev box, workstation, build server
+
+**Shelved drive**:
+The original NUC system disk, removed intact at the swap and stored labelled and
+unpowered. It is the rollback, and — because nothing was migrated off it — the
+only copy of everything the old desktop held. Recoverable with a screwdriver or
+a USB enclosure, not over the network.
+_Avoid_: old disk, backup drive, spare
